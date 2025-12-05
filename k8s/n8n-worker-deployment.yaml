@@ -13,6 +13,13 @@ spec:
       labels:
         app: n8n-worker
     spec:
+      initContainers:
+        - name: volume-permissions
+          image: busybox
+          command: ["sh", "-c", "chown -R 1000:1000 /home/node/.n8n"]
+          volumeMounts:
+            - name: n8n-storage
+              mountPath: /home/node/.n8n
       containers:
         - name: n8n-worker
           image: docker.n8n.io/n8nio/n8n

@@ -48,10 +48,12 @@ spec:
                 - "localhost"
                 - "-U"
                 - "changeUser" # Placeholder, should match POSTGRES_USER in ConfigMap
+                - "-d"
+                - "n8n" # Explicitly specify the database name
             initialDelaySeconds: 10
             periodSeconds: 5
             timeoutSeconds: 5
-            retries: 10
+            failureThreshold: 10
       volumes:
         - name: postgres-storage
           persistentVolumeClaim:
