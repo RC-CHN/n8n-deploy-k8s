@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: n8n-config
+data:
+  # === From .env file - PLEASE CHANGE THESE VALUES ===
+  POSTGRES_USER: "changeUser"
+  POSTGRES_PASSWORD: "changePassword"
+  POSTGRES_DB: "n8n"
+  POSTGRES_NON_ROOT_USER: "changeUser"
+  POSTGRES_NON_ROOT_PASSWORD: "changePassword"
+  ENCRYPTION_KEY: "changeEncryptionKey"
+
+  # === From docker-compose.yml ===
+  DB_TYPE: "postgresdb"
+  DB_POSTGRESDB_HOST: "postgres-service" # K8s service name for postgres
+  DB_POSTGRESDB_PORT: "5432"
+  EXECUTIONS_MODE: "queue"
+  QUEUE_BULL_REDIS_HOST: "redis-service" # K8s service name for redis
+  QUEUE_HEALTH_CHECK_ACTIVE: "true"

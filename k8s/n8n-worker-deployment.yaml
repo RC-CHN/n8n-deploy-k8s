@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: n8n-worker-deployment
+  namespace: n8n
+spec:
+  replicas: 1 # 您可以根据需要增加副本数以提高处理能力
+  selector:
+    matchLabels:
+      app: n8n-worker
+  template:
+    metadata:
+      labels:
+        app: n8n-worker
+    spec:
+      containers:
+        - name: n8n-worker
+          image: docker.n8n.io/n8nio/n8n
+          imagePullPolicy: IfNotPresent
+          args:
+            - worker
+          envFrom:
+            - configMapRef:
+                name: n8n-config
+          volumeMounts:
+            - name: n8n-storage
+              mountPath: /home/node/.n8n
+      volumes:
+        - name: n8n-storage
+          persistentVolumeClaim:
+            claimName: n8n-pvc
